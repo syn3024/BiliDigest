@@ -1,23 +1,30 @@
 @echo off
+setlocal
+cd /d %~dp0
+
 echo ==================================================
-echo   正在启动 Bilibili AI 总结工具...
-echo   (首次启动可能需要几秒钟加载环境)
+echo   BiliDigest 启动器
 echo ==================================================
 
-:: 1. 自动进入当前目录下的虚拟环境
-:: 注意：如果你 PyCharm 的虚拟环境目录名不是 .venv，请修改下面的名称
-set VENV_PATH=%~dp0.venv\Scripts\activate.bat
-
-if exist "%VENV_PATH%" (
-    call "%VENV_PATH%"
+:: 1. 尝试激活虚拟环境 (如果存在)
+if exist ".venv\Scripts\activate.bat" (
+    echo [状态] 检测到虚拟环境，正在激活...
+    call .venv\Scripts\activate.bat
 ) else (
-    echo [错误] 找不到虚拟环境文件夹 .venv。
-    echo 请确保此 bat 文件放在 PyCharm 项目的根目录下。
+    echo [状态] 未检测到虚拟环境，将尝试使用全局 Python 运行...
+)
+
+:: 2. 检查 streamlit 是否安装
+where streamlit >nul 2>nul
+if %errorlevel% neq 0 (
+    echo [错误] 未找到 streamlit。
+    echo 请先运行: pip install -r requirements.txt
     pause
     exit
 )
 
-:: 2. 运行 Streamlit
+:: 3. 运行程序
+echo [系统] 正在启动 Web 界面...
 streamlit run app.py
 
 pause
