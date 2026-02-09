@@ -1,0 +1,21 @@
+# UI 界面框架
+streamlit
+
+# 视频下载核心
+yt-dlp
+
+# 语音转文字模型
+openai-whisper
+
+# API 请求库
+requests
+
+# 基础数学/张量运算 (Whisper 依赖)
+# 注意：直接通过 pip 安装 torch 通常默认安装 CPU 版本
+# GPU 用户建议参考 README 中的特殊指令
+torch
+torchvision
+torchaudio
+
+# 其他依赖补丁（防止某些环境下 Whisper 安装失败）
+setuptools-rust
